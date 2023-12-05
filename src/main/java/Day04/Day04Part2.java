@@ -83,23 +83,29 @@ public class Day04Part2 {
         listCards.addAll(cards.entrySet());
         System.out.println(listMatchingNumbers);
         System.out.println(listCards);
+        Integer entryValue = 0;
         for (int i = 0; i < listMatchingNumbers.size(); i++) {
             String str = listMatchingNumbers.get(i).toString();
             System.out.println(str);
             String[] splitted = str.split("=");
             Integer value = Integer.parseInt(splitted[1]);
-            //Card 3, 2
-            //i = 2
-            //k = 3
-            //k <= 4
-            for (int k = 1; k <= value; k++) {
-                Map.Entry<String, Integer> entry = listCards.get(k);
-                Integer entryValue = entry.getValue();
-                entry.setValue(entryValue + 1);
+            if (i != 0) {
+                for (int times = 0; times < value; times++) {
+                    for (int k = i + 1; k <= value + i; k++) {
+                        Map.Entry<String, Integer> entry = listCards.get(k);
+                        entryValue = entry.getValue();
+                        entry.setValue(entryValue + 1);
+                        listMatchingNumbers.get(i).setValue(entryValue.intValue());
+                    }
+                }
+            } else {
+                for (int k = i + 1; k <= value + i; k++) {
+                    Map.Entry<String, Integer> entry = listCards.get(k);
+                    entryValue = entry.getValue();
+                    entry.setValue(entryValue + 1);
+                }
             }
         }
-
-
     }
 
 
