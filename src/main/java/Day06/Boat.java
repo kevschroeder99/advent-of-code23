@@ -1,14 +1,16 @@
 package Day06;
 
+import java.math.BigInteger;
+
 public class Boat {
 
     public int speed;
 
-    public int distance;
+    public BigInteger distance;
 
     public int charge;
 
-    public Boat(int speed, int charge, int distance){
+    public Boat(int speed, int charge, BigInteger distance){
         this.speed = 0;
         this.charge = charge;
         this.distance = distance;
@@ -30,11 +32,11 @@ public class Boat {
         this.charge = charge;
     }
 
-    public int getDistance() {
+    public BigInteger getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(BigInteger distance) {
         this.distance = distance;
     }
 }
