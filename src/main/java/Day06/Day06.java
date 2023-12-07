@@ -27,6 +27,8 @@ public class Day06 {
             //Part#2: replaceAll hinzugefügt
             String time = list.get(0).replaceAll("\\s+", "");
             String distance = list.get(1).replaceAll("\\s+", "");
+            //String time = list.get(0);
+            //String distance = list.get(1);
             //Part#2: \\s+ ersetzt durch \\D+
             String[] timeArray = time.split("\\D+");
             String[] distanceArray = distance.split("\\D+");
@@ -49,9 +51,10 @@ public class Day06 {
         int wins = 0;
         for (int i = 0; i < time; i++) {
             boat.setCharge(i);
-            int timeDifference = time - boat.getCharge();
+            BigInteger timeDifference = BigInteger.valueOf(time - boat.getCharge());
             boat.setSpeed(i);
-            BigInteger distance = BigInteger.valueOf(boat.getSpeed() * timeDifference);
+            //Distance is too high
+            BigInteger distance = timeDifference.multiply(BigInteger.valueOf(boat.getSpeed()));
             boat.setDistance(distance);
             int compare = distance.compareTo(BigInteger.valueOf(maxDistance));
             if (compare == 1) {
