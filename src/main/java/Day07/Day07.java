@@ -37,39 +37,27 @@ public class Day07 {
                 if (occurance.size() == 1) {
                     playHandsList.get(i).setRank(playHandsList.size());
                 } else if (occurance.size() == 5) {
-                    playHandsList.get(i).setRank(0);
+                    playHandsList.get(i).setRank(1);
                 } else {
-                    playHandsList.get(i).setRank(playHandsList.size() / 2);
+                    if (occurance.size() == 4) {
+                        playHandsList.get(i).setRank(2);
+                    } else if (occurance.size() == 2) {
+                        setRankFor2Elements(occurance, playHandsList.get(i), playHandsList.size());
+                    } else {
+                        setRankFor3Elements(occurance, playHandsList.get(i), playHandsList.size());
+                    }
                 }
                 System.out.println("Rank: " + playHandsList.get(i).getRank());
-                //Five of a Kind : AAAAA
-                //Four of a Kind : AA8AA
-                //Full House     : 23332
-                //Three of a Kind: TTT98
-                //Two of a Kind  : 23432
-                //One of a Kind  : A23A4
-                //High Card      : 23456
             }
-            //if (occurance.size() == 2) {
-//                        //Higher ranks
-//                        if (occurance.values().stream().filter(l -> l.longValue() == 4).findFirst().isPresent()) {
-//                            playHandsList.get(i).setRank(playHandsList.size() - 1);
-//                        } else {
-//                            playHandsList.get(i).setRank(playHandsList.size() - 2);
-//                        }
-//                    } else {
-//                        //Lower Ranks
-//                        if (occurance.size() == 3) {
-//                            playHandsList.get(i).setRank(2);
-//
-//                        } else {
-//
-//                        }
-//                    }
-//                }
+
+            for (int i = 1; i <= playHandsList.size(); i++) {
+                restructurePlayHand(i, playHandsList);
+            }
+
             //Map 1 Element                   -> Highest (Set Rank = playHandsList.size)
             //Map 2 Elemente && ein Value = 4 -> Highest - 1
             //Map 2 Elemente && ein Value = 3 -> Highest - 2
+
             //Map 3 Elemente && ein Value = 3 -> Highest - 3 (Set Rank = playHandsList.size / 2 )
             //Map 3 Elemente && ein Value = 2 -> Highest - 4
             //Map 4 Elemente                  -> Highest - 5
@@ -78,7 +66,47 @@ public class Day07 {
             //Alle highest sind auf dem höchsten
             //Alle lowest sind auf dem niedrigsten
             //Alle anderen sind in der Mitte
-            System.out.println(playHandsList.get(5).getRank());
+            //System.out.println(playHandsList.get(5).getRank());
         }
     }
+
+    private void restructurePlayHand(int i, ArrayList<PlayHand> playHandsList) {
+        //Filtern nach Rank. Zu jedem doppelten Rank müssen die Karten verglichen werden.
+        ArrayList<PlayHand> filtered = playHandsList.stream().filter(obj -> obj.getRank() == i).collect(Collectors.toCollection(ArrayList::new));
+        if (filtered.size() != 1) {
+            rerankPlayhand(filtered, playHandsList);
+        }
+    }
+
+    private void rerankPlayhand(ArrayList<PlayHand> filtered, ArrayList<PlayHand> playHandsList) {
+
+    }
+
+    private void setRankFor3Elements(Map<String, Long> occurance, PlayHand playHand, int size) {
+        //Map 3 Elemente && ein Value = 3 -> Highest - 3 (Set Rank = playHandsList.size / 2 )
+        //Map 3 Elemente && ein Value = 2 -> Highest - 4
+        if (occurance.values().stream().filter(v -> v == 3).findAny().isPresent()) {
+            playHand.setRank(size / 2);
+        } else {
+            playHand.setRank((size / 2) - 1);
+        }
+    }
+
+    private void setRankFor2Elements(Map<String, Long> occurance, PlayHand playHand, int size) {
+        //Map 2 Elemente && ein Value = 4 -> Highest - 1
+        //Map 2 Elemente && ein Value = 3 -> Highest - 2
+        if (occurance.values().stream().filter(v -> v == 4).findAny().isPresent()) {
+            playHand.setRank(size - 1);
+        } else {
+            playHand.setRank(size - 2);
+        }
+    }
+
+    //Five of a Kind : AAAAA
+    //Four of a Kind : AA8AA
+    //Full House     : 23332
+    //Three of a Kind: TTT98
+    //Two of a Kind  : 23432
+    //One of a Kind  : A23A4
+    //High Card      : 23456
 }

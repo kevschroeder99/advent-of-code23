@@ -20,8 +20,14 @@ public class Day05 {
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
-                //First Line is Seed
-                //Second Line is Soil
+                //First Line is Seed to be planted
+
+                //Second Line is Seed to soil:
+                //the destination range start, the source range start, and the range length
+                //50 98 2 -> source range: 50, 51 ; dest. range: 98, 99 = 50 -> 98, 51 -> 99
+                //52 50 48 -> source range: 50, 51, ... 96, 97 ; dest. range: 52, 53, ... 98, 99 = 53 -> 55
+                //Source Number that is not mapped -> Mapped to same dest. (10 -> 10)
+
             }
         }
     }
