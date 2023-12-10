@@ -2,8 +2,8 @@ package Day07;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Day07 {
 
@@ -27,23 +27,58 @@ public class Day07 {
                 playHand.setBid(Integer.parseInt(splitHand[1]));
                 playHandsList.add(playHand);
             }
-            System.out.println(playHandsList.size());
-            //Five of a Kind : AAAAA
-            //Four of a Kind : AA8AA
-            //Full House     : 23332
-            //Three of a Kind: TTT98
-            //Two of a Kind  : 23432
-            //One of a Kind  : A23A4
-            //High Card      : 23456
             for (int i = 0; i < playHandsList.size(); i++) {
-                ArrayList<String> cards = new ArrayList<>();
                 String card = playHandsList.get(i).getHand();
-                char[] ch = card.toCharArray();
-                for(int k = 1; k < 5; k++){
-                    String s = String.valueOf(ch[k]);
-                    System.out.println(s);
+                Map<String, Long> occurance = new HashMap<>();
+                for (int k = 0; k < 5; k++) {
+                    occurance = Arrays.stream(card.split("")).collect(Collectors.groupingBy(s -> s, LinkedHashMap::new, Collectors.counting()));
                 }
+                System.out.println(occurance);
+                if (occurance.size() == 1) {
+                    playHandsList.get(i).setRank(playHandsList.size());
+                } else if (occurance.size() == 5) {
+                    playHandsList.get(i).setRank(0);
+                } else {
+                    playHandsList.get(i).setRank(playHandsList.size() / 2);
+                }
+                System.out.println("Rank: " + playHandsList.get(i).getRank());
+                //Five of a Kind : AAAAA
+                //Four of a Kind : AA8AA
+                //Full House     : 23332
+                //Three of a Kind: TTT98
+                //Two of a Kind  : 23432
+                //One of a Kind  : A23A4
+                //High Card      : 23456
             }
+            //if (occurance.size() == 2) {
+//                        //Higher ranks
+//                        if (occurance.values().stream().filter(l -> l.longValue() == 4).findFirst().isPresent()) {
+//                            playHandsList.get(i).setRank(playHandsList.size() - 1);
+//                        } else {
+//                            playHandsList.get(i).setRank(playHandsList.size() - 2);
+//                        }
+//                    } else {
+//                        //Lower Ranks
+//                        if (occurance.size() == 3) {
+//                            playHandsList.get(i).setRank(2);
+//
+//                        } else {
+//
+//                        }
+//                    }
+//                }
+            //Map 1 Element                   -> Highest (Set Rank = playHandsList.size)
+            //Map 2 Elemente && ein Value = 4 -> Highest - 1
+            //Map 2 Elemente && ein Value = 3 -> Highest - 2
+            //Map 3 Elemente && ein Value = 3 -> Highest - 3 (Set Rank = playHandsList.size / 2 )
+            //Map 3 Elemente && ein Value = 2 -> Highest - 4
+            //Map 4 Elemente                  -> Highest - 5
+            //Map hat 5 Elemente -> High Card -> Highest - 6 (Lowest) (Set Rank = 0)
+
+            //Alle highest sind auf dem höchsten
+            //Alle lowest sind auf dem niedrigsten
+            //Alle anderen sind in der Mitte
+            System.out.println(playHandsList.get(5).getRank());
         }
     }
 }
