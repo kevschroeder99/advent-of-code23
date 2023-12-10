@@ -74,12 +74,24 @@ public class Day07 {
         //Filtern nach Rank. Zu jedem doppelten Rank müssen die Karten verglichen werden.
         ArrayList<PlayHand> filtered = playHandsList.stream().filter(obj -> obj.getRank() == i).collect(Collectors.toCollection(ArrayList::new));
         if (filtered.size() != 1) {
-            rerankPlayhand(filtered, playHandsList);
+            rerankPlayhand(i,filtered, playHandsList);
         }
     }
 
-    private void rerankPlayhand(ArrayList<PlayHand> filtered, ArrayList<PlayHand> playHandsList) {
+    private void rerankPlayhand(int k, ArrayList<PlayHand> filtered, ArrayList<PlayHand> playHandsList) {
+        if (filtered.size() == 2) {
+            char[] hand1 = filtered.get(0).getHand().toCharArray();
+            char[] hand2 = filtered.get(1).getHand().toCharArray();
+            for (int i = 0; i < hand1.length; i++) {
+                if (hand1[i] < hand2[i]) {
+                    playHandsList.set(i,filtered.get(1));
+                    break;
+                } else if (hand1[i] > hand2[i]) {
 
+                    break;
+                }
+            }
+        }
     }
 
     private void setRankFor3Elements(Map<String, Long> occurance, PlayHand playHand, int size) {

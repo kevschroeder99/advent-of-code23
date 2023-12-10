@@ -2,6 +2,7 @@ package Day05;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class Day05 {
 
@@ -17,9 +18,11 @@ public class Day05 {
     private void doPart1(String file) throws Exception {
         FileReader fileReader = new FileReader(file);
         try (BufferedReader br = new BufferedReader(fileReader)) {
+            ArrayList<String> list = new ArrayList<>();
             String line;
             while ((line = br.readLine()) != null) {
                 System.out.println(line);
+                list.add(line);
                 //First Line is Seed to be planted
 
                 //Second Line is Seed to soil:
@@ -29,6 +32,8 @@ public class Day05 {
                 //Source Number that is not mapped -> Mapped to same dest. (10 -> 10)
 
             }
+            System.out.println(list);
+
         }
     }
 

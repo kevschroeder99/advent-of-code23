@@ -46,14 +46,14 @@ public class Day08 {
         }
     }
 
-    private boolean isNextStepLeft(String instruction) {
+    public boolean isNextStepLeft(String instruction) {
         if (instruction.startsWith("L")) {
             return true;
         }
         return false;
     }
 
-    private String getCurrentNode(boolean isLeft, List<Node> nodes, String nodeName) {
+    public String getCurrentNode(boolean isLeft, List<Node> nodes, String nodeName) {
         Optional<Node> node = nodes.stream()
                 .filter(obj -> obj.getName()
                         .equals(nodeName))
@@ -64,7 +64,7 @@ public class Day08 {
         return node.get().getRight();
     }
 
-    private List<Node> setNodes(ArrayList<String> list) {
+    public List<Node> setNodes(ArrayList<String> list) {
         List<Node> nodesList = new ArrayList<>();
         for (int i = 1; i < list.size(); i++) {
             String s = list.get(i);
@@ -80,7 +80,7 @@ public class Day08 {
         return nodesList;
     }
 
-    private void setDirections(Node node, String s) {
+    public void setDirections(Node node, String s) {
         String[] leftAndRight = s.split(" = ");
         String[] leftAndRightSplitted = leftAndRight[1].split(",");
         String left = leftAndRightSplitted[0];
