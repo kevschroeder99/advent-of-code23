@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Day09 {
+
     private static String file = "src/main/resources/09_input.txt";
     //private static String file = "src/test/resources/09_input_test.txt";
 
@@ -48,27 +49,30 @@ public class Day09 {
         //2. Zahl dadrüber einfügen
         //3. Zahl aus 2. + Zahl dadrüber = neue Zahl
         //4. weiter
+
+        //Für Part 2: Das gleiche bloß am Anfang der Liste
         int lowestList = historyList.size();
         for (int i = lowestList - 1; i >= 0; i--) {
             historyList.get(i);
             if (i == lowestList - 1) {
-                addValuesToList(historyList, i, true);
+                //Part 1:
+                //addValuesToListRight(historyList, i, true);
+                addValuesToListLeft(historyList, i, true);
             } else {
-                addValuesToList(historyList, i, false);
+                //Part 1:
+                //addValuesToListRight(historyList, i, false);
+                addValuesToListLeft(historyList, i, false);
             }
         }
-        return getHistoryValues(historyList);
+        //return getHistoryValues(historyList);
+        return getHistoryValuesPart2(historyList);
     }
 
-    private int getHistoryValues(List<List<Integer>> historyList) {
-        List<Integer> highestList = historyList.get(0);
-        int size = highestList.size();
-        return highestList.get(size - 1);
-    }
 
-    private void addValuesToList(List<List<Integer>> integers, int i, boolean isLowestList) {
+
+    private void addValuesToListRight(List<List<Integer>> integers, int i, boolean isLowestList) {
         if (isLowestList) {
-            integers.get(i).add(0);
+            integers.get(i).add(0, 0);
         } else {
             int sizeCurrentList = integers.get(i).size();
             int sizeNextList = integers.get(i + 1).size();
@@ -76,6 +80,27 @@ public class Day09 {
             int valueNextList = integers.get(i + 1).get(sizeNextList - 1);
             integers.get(i).add(valueNextList + valueCurrentList);
         }
+    }
+
+    private void addValuesToListLeft(List<List<Integer>> integers, int i, boolean isLowestList) {
+        if (isLowestList) {
+            integers.get(i).add(0);
+        } else {
+            int valueCurrentList = integers.get(i).get(0);
+            int valueNextList = integers.get(i + 1).get(0);
+            integers.get(i).add(0,valueCurrentList - valueNextList);
+        }
+    }
+
+    private int getHistoryValuesPart2(List<List<Integer>> historyList) {
+        List<Integer> highestList = historyList.get(0);
+        return highestList.get(0);
+    }
+
+    private int getHistoryValues(List<List<Integer>> historyList) {
+        List<Integer> highestList = historyList.get(0);
+        int size = highestList.size();
+        return highestList.get(size - 1);
     }
 
     private boolean allElementAreZeros(List<Integer> deltaList) {
