@@ -15,7 +15,7 @@ public class Day03 {
 
     }
 
-    private void doPart1(String file) throws Exception {
+    void doPart1(String file) throws Exception {
         FileReader fileReader = new FileReader(file);
         ArrayList<Character> symbolicChars = new ArrayList<>();
         symbolicChars.add('$');
