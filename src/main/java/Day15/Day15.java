@@ -1,10 +1,7 @@
 package Day15;
 
-import Day10.Day10;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
