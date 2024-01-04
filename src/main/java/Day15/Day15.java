@@ -22,7 +22,6 @@ public class Day15 {
             List<Integer> results = new ArrayList<>();
             while ((line = br.readLine()) != null) {
                 String[] splitted = line.split(",");
-                //System.out.println(splitted.length);
                 for (int i = 0; i < splitted.length; i++) {
                     int hashValue = getHashValue(splitted[i]);
                     results.add(hashValue);
@@ -32,11 +31,16 @@ public class Day15 {
         }
     }
 
+    //Part2:
+    //256 Boxes, starting with box 0
+    //The boxes are arranged in a line starting from the point where light enters the facility.
+    //The boxes have holes that allow light to pass from one box to the next all the way down the line.
+    //Boxes have lens slots. Lenses can be removed or added
+    //Along the wall running parallel to the boxes is a large library containing lenses organized by focal length ranging from 1 through 9
+
+
+
     private int getHashValue(String s) {
-//        r = 114 * 17 = 1938 / 256 = 146
-//        n = 146 + 110= 256 * 17 = 4352 / 256 = 0
-//                = = 0 + 61 = 61 * 17 = 1037 / 256 = 13
-//        1 = 49 + 13 = 62 * 17 = 1054 / 256 = 30
         int startingValue = 0;
         for (Character c : s.toCharArray()) {
             int charAsAscii = (int) c + startingValue;
